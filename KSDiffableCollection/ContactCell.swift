@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol LiftAndDrag: AnyObject {
+    func none()
+    func lift()
+}
+
 class ContactCell: UICollectionViewCell {
     
     //MARK: - Variables
@@ -36,6 +41,8 @@ class ContactCell: UICollectionViewCell {
             colorCell(name: number!)
         }
     }
+    
+    weak var delegate: LiftAndDrag?
     
     //MARK: - Init
     
@@ -85,5 +92,16 @@ class ContactCell: UICollectionViewCell {
         }
     }
     
+    override func dragStateDidChange(_ dragState: UICollectionViewCell.DragState) {
+
+        switch dragState {
+        case .none:
+            delegate?.none()
+        case .lifting:
+            delegate?.lift()
+        default:
+            break
+        }
+    }
 }
 

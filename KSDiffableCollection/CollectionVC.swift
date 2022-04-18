@@ -105,6 +105,7 @@ extension CollectionVC {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ContactCell
             cell.number = num
+            cell.delegate = self
             cell.layer.cornerRadius = 25
             
             self.anim(cell: cell, oneCell: "1", indexPathRow: indexPath.row)
@@ -258,4 +259,16 @@ extension CollectionVC: UICollectionViewDropDelegate {
         guard let _ = destinationIndexPath else { return .init(operation: .forbidden) }
         return .init(operation: .move, intent: .insertAtDestinationIndexPath)
     }
+}
+
+extension CollectionVC: LiftAndDrag {
+    func none() {
+        navigationItem.rightBarButtonItem?.isEnabled = true
+    }
+    
+    func lift() {
+        navigationItem.rightBarButtonItem?.isEnabled = false
+    }
+    
+    
 }
