@@ -30,10 +30,10 @@ class ContactCell: UICollectionViewCell {
         return v
     }()
 
-    var contact: String? {
+    var number: String? {
         didSet {
-            nameLbl.text = contact
-            colorCell(name: contact!)
+            nameLbl.text = number
+            colorCell(name: number!)
         }
     }
     

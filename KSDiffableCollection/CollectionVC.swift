@@ -7,7 +7,7 @@
 
 import UIKit
 
-fileprivate typealias ContactDataSource = UICollectionViewDiffableDataSource<CollectionVC.Section, String>
+fileprivate typealias NumberDataSource = UICollectionViewDiffableDataSource<CollectionVC.Section, String>
 fileprivate typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionVC.Section, String>
 
 class CollectionVC: UIViewController {
@@ -22,8 +22,8 @@ class CollectionVC: UIViewController {
     var predCells: [String] = []
     
     let cellId = "cellId"
-    private var contacts = [String]()
-    private var dataSource: ContactDataSource!
+    private var numbers = [String]()
+    private var dataSource: NumberDataSource!
     private var collectionView: UICollectionView!
     
     fileprivate var snapshot = DataSourceSnapshot()
@@ -71,7 +71,7 @@ class CollectionVC: UIViewController {
 extension CollectionVC {
     
     private func createData() {
-        contacts = allCells
+        numbers = allCells
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -101,10 +101,10 @@ extension CollectionVC {
     
     private func configureDataSource() {
         
-        dataSource = ContactDataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, contact) -> ContactCell? in
+        dataSource = NumberDataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, num) -> ContactCell? in
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ContactCell
-            cell.contact = contact
+            cell.number = num
             cell.layer.cornerRadius = 25
             
             self.anim(cell: cell, oneCell: "1", indexPathRow: indexPath.row)
@@ -118,7 +118,7 @@ extension CollectionVC {
         
         snapshot = DataSourceSnapshot()
         snapshot.appendSections([Section.main])
-        snapshot.appendItems(contacts)
+        snapshot.appendItems(numbers)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
@@ -128,32 +128,34 @@ extension CollectionVC {
         var new = 0
         var pred = 0
         
+        let space = 20
+        
         switch indexPred {
         case 0:
-            pred = 20
+            pred = space
         case 1:
-            pred = Int(cell.frame.height) + 40
+            pred = Int(cell.frame.height) + space * 2
         case 2:
-            pred = Int(cell.frame.height) * 2 + 60
+            pred = Int(cell.frame.height) * 2 + space * 3
         case 3:
-            pred = Int(cell.frame.height) * 3 + 80
+            pred = Int(cell.frame.height) * 3 + space * 4
         case 4:
-            pred = Int(cell.frame.height) * 4 + 100
+            pred = Int(cell.frame.height) * 4 + space * 5
         default:
             break
         }
         
         switch indexNow {
         case 0:
-            new = 20
+            new = space
         case 1:
-            new = Int(cell.frame.height) + 40
+            new = Int(cell.frame.height) + space * 2
         case 2:
-            new = Int(cell.frame.height) * 2 + 60
+            new = Int(cell.frame.height) * 2 + space * 3
         case 3:
-            new = Int(cell.frame.height) * 3 + 80
+            new = Int(cell.frame.height) * 3 + space * 4
         case 4:
-            new = Int(cell.frame.height) * 4 + 100
+            new = Int(cell.frame.height) * 4 + space * 5
         default:
             break
         }
